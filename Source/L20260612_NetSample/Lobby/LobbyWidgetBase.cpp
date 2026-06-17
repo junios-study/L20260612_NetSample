@@ -6,10 +6,15 @@
 #include "Components/EditableTextBox.h"
 #include "Components/TextBlock.h"
 #include "Components/ScrollBox.h"
+#include "Animation/WidgetAnimation.h"
 
 void ULobbyWidgetBase::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
+
+	//StartButton = Cast<UButton>(GetWidgetFromName(TEXT("StartButton")));
+
+	//ShowButtonAnimation = Cast<UWidgetAnimation>(GetWidgetFromName(TEXT("StartButton")));
 
 	StartButton->OnClicked.AddDynamic(this, &ULobbyWidgetBase::PressStart);
 	if (SendButton)
@@ -47,6 +52,15 @@ void ULobbyWidgetBase::UpdateLeftTime(const int32 InLeftTime)
 
 void ULobbyWidgetBase::UpdateConnectionCount(const int32 InConnectionCount)
 {
+}
+
+void ULobbyWidgetBase::ShowStartButton()
+{
+	if (ShowButtonAnimation)
+	{
+		StartButton->SetVisibility(ESlateVisibility::Visible);
+		PlayAnimation(ShowButtonAnimation);
+	}
 }
 
 

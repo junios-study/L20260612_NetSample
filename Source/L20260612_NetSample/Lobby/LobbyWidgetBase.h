@@ -59,5 +59,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void UpdateConnectionCount(const int32 InConnectionCount);
 
+	UFUNCTION(BlueprintCallable)
+	void ShowStartButton();
+
+	UPROPERTY(Transient, meta=(BindWidgetAnimOptional))
+	TObjectPtr<UWidgetAnimation> ShowButtonAnimation;
 
 };

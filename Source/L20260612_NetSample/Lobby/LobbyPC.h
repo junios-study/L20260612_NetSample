@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "LobbyPC.generated.h"
 
+
+class ULobbyWidgetBase;
 /**
  * 
  */
@@ -17,4 +19,9 @@ class L20260612_NETSAMPLE_API ALobbyPC : public APlayerController
 public:
 	virtual void BeginPlay() override;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+	TSubclassOf<ULobbyWidgetBase> LobbyWidgetTemplate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+	TObjectPtr<ULobbyWidgetBase> LobbyWidgetObject;
 };
