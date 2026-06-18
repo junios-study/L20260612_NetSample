@@ -14,4 +14,14 @@ class L20260612_NETSAMPLE_API ALobbyGS : public AGameStateBase
 {
 	GENERATED_BODY()
 	
+public:
+
+	ALobbyGS();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Time", Replicated)
+	int32 LeftTime = 180;
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	virtual void Tick(float DeltaSeconds) override;
 };

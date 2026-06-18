@@ -13,5 +13,12 @@ UCLASS()
 class L20260612_NETSAMPLE_API ALobbyGM : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+public:
+
+	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+
+	FTimerHandle LeftTimerHandle;
 };

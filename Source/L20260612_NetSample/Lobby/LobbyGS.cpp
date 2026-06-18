@@ -2,4 +2,39 @@
 
 
 #include "LobbyGS.h"
+#include "Net/UnrealNetwork.h"
+#include "LobbyPC.h"
+#include "Kismet/GameplayStatics.h"
+#include "LobbyWidgetBase.h"
 
+
+
+ALobbyGS::ALobbyGS()
+{
+	PrimaryActorTick.bCanEverTick = true;
+}
+
+
+void ALobbyGS::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	//Listen Server ¼­¹ö?
+	//Client
+	//Standalone
+	//DedicateServer
+	ALobbyPC* PC = Cast<ALobbyPC>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	if (PC && PC->IsLocalPlayerController() && PC->LobbyWidgetObject)
+	{
+
+		PC->LobbyWidgetObject->UpdateLeftTime(LeftTime);
+	}
+}
+
+void ALobbyGS::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ALobbyGS, LeftTime);
+
+}
