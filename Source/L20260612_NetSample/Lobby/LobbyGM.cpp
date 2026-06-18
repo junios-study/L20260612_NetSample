@@ -30,3 +30,27 @@ void ALobbyGM::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 	Super::EndPlay(EndPlayReason);
 }
+
+void ALobbyGM::PostLogin(APlayerController* NewPlayer)
+{
+	Super::PostLogin(NewPlayer);
+
+	ALobbyGS* GS = GetGameState<ALobbyGS>();
+	if (GS)
+	{
+		GS->ConnectionCount = GetNumPlayers();
+	}
+}
+
+void ALobbyGM::Logout(AController* Exiting)
+{
+	Super::Logout(Exiting);
+
+	UE_LOG(LogTemp, Warning, TEXT("Logout %s"), *Exiting->GetName());
+
+	ALobbyGS* GS = GetGameState<ALobbyGS>();
+	if (GS)
+	{
+		GS->ConnectionCount = GetNumPlayers() - 1;
+	}
+}

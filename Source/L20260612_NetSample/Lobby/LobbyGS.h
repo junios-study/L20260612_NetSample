@@ -21,6 +21,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Time", Replicated)
 	int32 LeftTime = 180;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Time", Replicated)
+	int32 ConnectionCount = 0;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	virtual void Tick(float DeltaSeconds) override;

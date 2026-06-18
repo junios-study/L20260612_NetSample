@@ -27,6 +27,7 @@ void ALobbyGS::Tick(float DeltaSeconds)
 	if (PC && PC->IsLocalPlayerController() && PC->LobbyWidgetObject)
 	{
 
+		PC->LobbyWidgetObject->UpdateConnectionCount(ConnectionCount);
 		PC->LobbyWidgetObject->UpdateLeftTime(LeftTime);
 	}
 }
@@ -36,5 +37,6 @@ void ALobbyGS::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetime
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ALobbyGS, LeftTime);
+	DOREPLIFETIME(ALobbyGS, ConnectionCount);
 
 }
