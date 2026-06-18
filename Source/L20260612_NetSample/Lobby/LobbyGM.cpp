@@ -16,7 +16,14 @@ void ALobbyGM::BeginPlay()
 			ALobbyGS* GS = GetGameState<ALobbyGS>();
 			if (GS)
 			{
-				GS->LeftTime--; //function();
+				if (GS->LeftTime == 0)
+				{
+					GetWorld()->GetTimerManager().ClearTimer(LeftTimerHandle);
+					StartGame();
+				}
+				{
+					GS->LeftTime--; 
+				}
 			}
 		},
 		1,
@@ -62,4 +69,10 @@ void ALobbyGM::Logout(AController* Exiting)
 		GS->ConnectionCount = GetNumPlayers() - 1;
 		GS->OnRep_ConnectionCount();
 	}
+}
+
+void ALobbyGM::StartGame()
+{
+	//Server, GameMode
+	GetWorld()->ServerTravel("InGame");
 }

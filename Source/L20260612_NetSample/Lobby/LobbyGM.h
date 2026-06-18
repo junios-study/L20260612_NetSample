@@ -24,6 +24,8 @@ public:
 
 	virtual void Logout(AController* Exiting) override;
 
+	void StartGame();
+
 
 
 	FTimerHandle LeftTimerHandle;

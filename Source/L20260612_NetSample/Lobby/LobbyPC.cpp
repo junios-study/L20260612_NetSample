@@ -30,6 +30,8 @@ void ALobbyPC::BeginPlay()
 		}
 	}
 
+	SetInputMode(FInputModeGameAndUI());
+	bShowMouseCursor = true;
 }
 
 void ALobbyPC::PostInitializeComponents()
@@ -60,4 +62,27 @@ bool ALobbyPC::C2S_SendMessage_Validate(const FText& Message)
 void ALobbyPC::C2S_SendMessage_Implementation(const FText& Message)
 {
 	//Execute Server
+	for (auto Iter = GetWorld()->GetPlayerControllerIterator(); Iter; Iter++)
+	{
+		ALobbyPC* OtherPC = Cast<ALobbyPC>(Iter->Get());
+		if (OtherPC)
+		{
+			//call server
+			OtherPC->S2C_SendMessage(Message);
+		}
+	}
+}
+
+void ALobbyPC::S2C_SendMessage_Implementation(const FText& Message)
+{
+	//execute client
+	//UI 메세지 추가
+	if (LobbyWidgetObject)
+	{
+		LobbyWidgetObject->AddMessage(Message);
+	}
+}
+
+void ALobbyPC::ShowLoadingScreen_Implementation()
+{
 }
