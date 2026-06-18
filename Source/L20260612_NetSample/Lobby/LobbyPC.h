@@ -18,6 +18,9 @@ class L20260612_NETSAMPLE_API ALobbyPC : public APlayerController
 
 public:
 	virtual void BeginPlay() override;
+
+	virtual void PostInitializeComponents() override;
+
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
 	TSubclassOf<ULobbyWidgetBase> LobbyWidgetTemplate;

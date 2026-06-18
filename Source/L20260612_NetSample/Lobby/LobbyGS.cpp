@@ -27,8 +27,18 @@ void ALobbyGS::Tick(float DeltaSeconds)
 	if (PC && PC->IsLocalPlayerController() && PC->LobbyWidgetObject)
 	{
 
-		PC->LobbyWidgetObject->UpdateConnectionCount(ConnectionCount);
 		PC->LobbyWidgetObject->UpdateLeftTime(LeftTime);
+	}
+}
+
+void ALobbyGS::OnRep_ConnectionCount()
+{
+	ALobbyPC* PC = Cast<ALobbyPC>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+
+	if (PC && PC->IsLocalPlayerController() && PC->LobbyWidgetObject)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("OnRep_ConnectionCount 2"));
+		PC->LobbyWidgetObject->UpdateConnectionCount(ConnectionCount);
 	}
 }
 

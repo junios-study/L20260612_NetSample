@@ -3,6 +3,8 @@
 
 #include "LobbyPC.h"
 #include "LobbyWidgetBase.h"
+#include "Kismet/GameplayStatics.h"
+#include "LobbyGS.h"
 
 void ALobbyPC::BeginPlay()
 {
@@ -18,8 +20,20 @@ void ALobbyPC::BeginPlay()
 			if (HasAuthority()) //Listen Server, 현재 클라이언트 방장일때
 			{
 				LobbyWidgetObject->ShowStartButton();
+				ALobbyGS* GS = Cast<ALobbyGS>(UGameplayStatics::GetGameState(GetWorld()));
+				if (GS)
+				{
+					GS->OnRep_ConnectionCount();
+				}
 			}
 		}
 	}
+
+}
+
+void ALobbyPC::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
 
 }
