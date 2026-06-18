@@ -7,6 +7,7 @@
 #include "Components/TextBlock.h"
 #include "Components/ScrollBox.h"
 #include "Animation/WidgetAnimation.h"
+#include "LobbyPC.h"
 
 void ULobbyWidgetBase::NativeOnInitialized()
 {
@@ -40,6 +41,23 @@ void ULobbyWidgetBase::PressSend()
 
 void ULobbyWidgetBase::PressChatTextEnder(const FText& Text, ETextCommit::Type CommitMethod)
 {
+	ALobbyPC* PC = Cast<ALobbyPC>(GetOwningPlayer());
+	
+	if (!PC)
+	{
+		return;
+	}
+
+	switch (CommitMethod)
+	{
+		case ETextCommit::OnEnter:
+			PC->C2S_SendMessage(Text);
+			InputText->SetText(FText::FromName(TEXT("")));
+			break;
+		case ETextCommit::OnCleared:
+			InputText->SetUserFocus(PC);
+			break;
+	}
 }
 
 void ULobbyWidgetBase::ProcessTextChange(const FText& Text)

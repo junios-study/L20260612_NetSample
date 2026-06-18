@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "LobbyGS.h"
 
+
 void ALobbyPC::BeginPlay()
 {
 	Super::BeginPlay();
@@ -34,6 +35,29 @@ void ALobbyPC::BeginPlay()
 void ALobbyPC::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+}
 
 
+void ALobbyPC::Kick()
+{
+	//Server에서만 호출
+	S2C_Kick();
+}
+
+//execute Client
+void ALobbyPC::S2C_Kick_Implementation()
+{
+	GEngine->HandleDisconnect(GetWorld(), GetWorld()->GetNetDriver());
+}
+
+bool ALobbyPC::C2S_SendMessage_Validate(const FText& Message)
+{
+	//Execute Server
+
+	return true;
+}
+
+void ALobbyPC::C2S_SendMessage_Implementation(const FText& Message)
+{
+	//Execute Server
 }
