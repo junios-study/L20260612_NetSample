@@ -37,7 +37,7 @@ void ARotateActor::Tick(float DeltaTime)
 	else
 	{
 		ClientTimeSinceUpdate += DeltaTime;
-		if (ClientTimeLastUpdate < KINDA_SMALL_NUMBER)
+		if (ClientTimeLastUpdate < UE_KINDA_SMALL_NUMBER)
 		{
 			//ClientTimeLastUpdate 너무 작아서 0이면 다음 프레임 계산하자
 			return;
