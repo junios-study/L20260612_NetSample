@@ -36,7 +36,26 @@ void ARotateActor::Tick(float DeltaTime)
 	}
 	else
 	{
+		ClientTimeSinceUpdate += DeltaTime;
+		if (ClientTimeLastUpdate < KINDA_SMALL_NUMBER)
+		{
+			//ClientTimeLastUpdate 너무 작아서 0이면 다음 프레임 계산하자
+			return;
+		}
 
+		float CalculateRotationYaw = ServerRotationYaw + (RotateSpeed * ClientTimeLastUpdate);
+		float LerpAlpha = ClientTimeSinceUpdate / ClientTimeLastUpdate;
+
+		//선형 보간법
+		float ClientNewYaw = FMath::Lerp(ServerRotationYaw, CalculateRotationYaw, LerpAlpha);
+		SetActorRotation(FRotator(0, ClientNewYaw, 0));
+
+		//회전 보간을 사용한 방법
+		//FRotator TargetRotation(GetActorRotation().Pitch, CalculateRotationYaw, GetActorRotation().Roll);
+
+		//float InterpSpeed = 5.f;
+		//FRotator NewRotation = FMath::RInterpTo(GetActorRotation(), TargetRotation, DeltaTime, InterpSpeed);
+		//SetActorRotation(NewRotation);
 	}
 
 }
@@ -55,8 +74,8 @@ void ARotateActor::OnRep_ServerRotationYaw()
 
 	SetActorRotation(FRotator(0, ServerRotationYaw, 0));
 
-	//float 4 * 3 = 12byte  * 3 = 36byte;
 
-	//4byte
+	ClientTimeLastUpdate = ClientTimeSinceUpdate;
+	ClientTimeSinceUpdate = 0;
 }
 
